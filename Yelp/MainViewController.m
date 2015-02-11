@@ -8,6 +8,8 @@
 
 #import "MainViewController.h"
 #import "YelpClient.h"
+#import "BusinessViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -17,7 +19,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @interface MainViewController ()
 
 @property (nonatomic, strong) YelpClient *client;
-
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSArray *businesses;
 @end
 
 @implementation MainViewController
@@ -31,6 +34,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         
         [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
             NSLog(@"response: %@", response);
+            NSDictionary *data = response;
+            self.businesses = data[@"businesses"];
+            [self.tableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error: %@", [error description]);
         }];
@@ -41,7 +47,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    /* Setup datasource and delegate */
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+
+    [self.tableView registerNib:[UINib  nibWithNibName:@"BusinessViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,4 +61,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     // Dispose of any resources that can be recreated.
 }
 
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.businesses.count;
+}
+
+-(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    BusinessViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"] ;
+    NSDictionary *data = self.businesses[indexPath.row];
+    cell.name.text = data[@"name"];
+    [cell.posterImageView setImageWithURL:[NSURL URLWithString:data[@"image_url"]]];
+    [cell.ratingsImageView setImageWithURL:[NSURL URLWithString:data[@"rating_img_url"]]];
+    NSDictionary *location = data[@"location"];
+    cell.address.text = [location[@"display_address"] componentsJoinedByString:@" ,"];
+    return cell;
+}
 @end
