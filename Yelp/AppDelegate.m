@@ -15,10 +15,19 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[MainViewController alloc] init];
+    MainViewController *mvc = [[MainViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
+    self.window.rootViewController = nvc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    UINavigationBar *navBar = [UINavigationBar appearance];
+    [navBar setBarTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    [navBar setTintColor:[UIColor whiteColor]];
+    
+
     return YES;
 }
 

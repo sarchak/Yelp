@@ -12,12 +12,21 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.name.preferredMaxLayoutWidth = self.name.frame.size.width;
+    self.posterImageView.layer.cornerRadius = 2.0;
+    self.posterImageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void) layoutSubviews {
+    [super layoutSubviews];
+    self.name.preferredMaxLayoutWidth = self.name.frame.size.width;
+    
 }
 
 @end

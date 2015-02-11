@@ -48,11 +48,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 {
     [super viewDidLoad];
     
+    self.title = @"Yelp";
     /* Setup datasource and delegate */
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
     [self.tableView registerNib:[UINib  nibWithNibName:@"BusinessViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,10 +71,15 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     BusinessViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"] ;
     NSDictionary *data = self.businesses[indexPath.row];
     cell.name.text = data[@"name"];
+    
     [cell.posterImageView setImageWithURL:[NSURL URLWithString:data[@"image_url"]]];
     [cell.ratingsImageView setImageWithURL:[NSURL URLWithString:data[@"rating_img_url"]]];
+    cell.reviews.text = [NSString stringWithFormat:@"%@ reviews", data[@"review_count"]];
     NSDictionary *location = data[@"location"];
-    cell.address.text = [location[@"display_address"] componentsJoinedByString:@" ,"];
+    NSString *distanceString = data[@"distance"];
+    double distance = 0.000621371192 * distanceString.doubleValue;
+    cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distance];
+    cell.address.text = location[@"display_address"][0];
     return cell;
 }
 @end
