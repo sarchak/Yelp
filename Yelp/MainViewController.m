@@ -96,6 +96,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BusinessViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"] ;
+    cell.dealImage.hidden= YES;
     NSDictionary *data = self.businesses[indexPath.row];
     cell.name.text = [NSString stringWithFormat:@"%ld. %@", indexPath.row + 1, data[@"name"]];
     
@@ -106,11 +107,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSString *distanceString = data[@"distance"];
     double distance = 0.000621371192 * distanceString.doubleValue;
     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distance];
-    
-//    NSMutableString *tmp = location[@"display_address"][0];
-//    if(location[@"neighborhoods"]){
-//        [tmp appendString:location[@"neighborhoods"][0]];
-//    }
+
+    if(data[@"deals"] != nil){
+        cell.dealImage.hidden= NO;
+    }
     if(location[@"neighborhoods"][0]) {
         cell.address.text = [NSString stringWithFormat:@"%@, %@", location[@"display_address"][0],location[@"neighborhoods"][0]];
     } else {

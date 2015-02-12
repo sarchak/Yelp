@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *reviews;
 @property (weak, nonatomic) IBOutlet UILabel *address;
 @property (weak, nonatomic) IBOutlet UILabel *categories;
+@property (weak, nonatomic) IBOutlet UIImageView *dealImage;
 
 @end

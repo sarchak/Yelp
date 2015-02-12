@@ -15,6 +15,7 @@
     self.name.preferredMaxLayoutWidth = self.name.frame.size.width;
     self.posterImageView.layer.cornerRadius = 2.0;
     self.posterImageView.clipsToBounds = YES;
+    self.dealImage.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -64,6 +64,13 @@
                             <constraint firstAttribute="height" constant="17" id="6eU-Fe-fD9"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deal" translatesAutoresizingMaskIntoConstraints="NO" id="xwI-wq-GOO">
+                        <rect key="frame" x="275" y="23" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="6Be-g1-961"/>
+                            <constraint firstAttribute="height" constant="20" id="9Ig-8z-0Ur"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="o6U-ze-kJ6" firstAttribute="top" secondItem="PIp-2V-jat" secondAttribute="bottom" constant="4" id="1jk-Eh-YdH"/>
@@ -77,7 +84,9 @@
                     <constraint firstItem="4zq-9p-sd3" firstAttribute="top" secondItem="7by-em-dml" secondAttribute="bottom" constant="2" id="NSM-Ys-e15"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q8h-ZV-OAP" secondAttribute="trailing" constant="8" id="NxV-oE-lzn"/>
                     <constraint firstItem="4zq-9p-sd3" firstAttribute="leading" secondItem="0yg-xv-i2N" secondAttribute="trailing" constant="5" id="W5M-cf-KgQ"/>
+                    <constraint firstItem="o6U-ze-kJ6" firstAttribute="leading" secondItem="xwI-wq-GOO" secondAttribute="trailing" constant="3" id="abj-i0-6Ty"/>
                     <constraint firstItem="0yg-xv-i2N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="cgf-nT-sM8"/>
+                    <constraint firstItem="xwI-wq-GOO" firstAttribute="top" secondItem="PIp-2V-jat" secondAttribute="bottom" constant="1" id="czp-A6-gSr"/>
                     <constraint firstItem="kBq-t3-XKW" firstAttribute="leading" secondItem="0yg-xv-i2N" secondAttribute="trailing" constant="3" id="d3V-KI-2Wq"/>
                     <constraint firstItem="kBq-t3-XKW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ebf-dh-kpv"/>
                     <constraint firstItem="PIp-2V-jat" firstAttribute="leading" secondItem="kBq-t3-XKW" secondAttribute="trailing" constant="8" id="fgD-v2-mgv"/>
@@ -91,6 +100,7 @@
             <connections>
                 <outlet property="address" destination="4zq-9p-sd3" id="yK4-o8-dSK"/>
                 <outlet property="categories" destination="Q8h-ZV-OAP" id="fXN-3Z-QW1"/>
+                <outlet property="dealImage" destination="xwI-wq-GOO" id="G6c-Rh-qVl"/>
                 <outlet property="distance" destination="PIp-2V-jat" id="kRs-Xj-0c9"/>
                 <outlet property="name" destination="kBq-t3-XKW" id="Klz-sR-pW8"/>
                 <outlet property="posterImageView" destination="0yg-xv-i2N" id="jt1-qz-TZG"/>
@@ -100,4 +110,7 @@
             <point key="canvasLocation" x="413" y="338"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="deal" width="25" height="25"/>
+    </resources>
 </document>

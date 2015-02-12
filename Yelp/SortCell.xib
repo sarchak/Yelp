@@ -14,17 +14,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Match" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9A-Kn-MQp">
-                        <rect key="frame" x="20" y="10" width="86" height="24"/>
-                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ch3-Vz-72T">
+                        <rect key="frame" x="8" y="8" width="304" height="29"/>
+                        <segments>
+                            <segment title="Best Match"/>
+                            <segment title="Distance"/>
+                            <segment title="Highest Rated"/>
+                        </segments>
+                        <color key="tintColor" red="0.70980392160000005" green="0.039215686270000001" blue="0.015686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </segmentedControl>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="G9A-Kn-MQp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="4EI-nw-aOz"/>
-                    <constraint firstAttribute="centerY" secondItem="G9A-Kn-MQp" secondAttribute="centerY" id="HNF-kc-cPT"/>
-                </constraints>
             </tableViewCellContentView>
         </tableViewCell>
     </objects>
