@@ -19,8 +19,10 @@
 @property (strong, nonatomic) NSArray *sortOptions;
 @property (strong, readonly) NSDictionary* filters;
 @property (nonatomic, assign) BOOL dealsOn;
+@property (nonatomic, assign) BOOL listView;
 @property (nonatomic, strong) NSMutableSet* categoryFilters;
 @property (nonatomic, strong) NSUserDefaults* userDefaults;
+@property (nonatomic, assign) NSInteger selectedIndex;
 -(UITableViewCell*) getTableViewCell:(NSIndexPath*) indexPath;
 
 
@@ -39,8 +41,8 @@
     self.tableView.estimatedRowHeight = 50;
     self.categories = [self getCategories];
     self.simpleCategories = @[@"American",@"Thai",@"Chinese",@"Indian", @"Show All"];
-    self.distanceOptions = @[@"Best Match", @"0.3 miles",@"1 mile", @"5 miles", @"20 miles"];
-    self.sortOptions = @[@"Best Match",@"Distance", @"Rating", @"Most Reviewed"];
+    self.distanceOptions = @[@"Best Match", @"0.3",@"1", @"5", @"20"];
+    self.sortOptions = @[@"Best Match",@"Distance", @"Rating"];
     /* Register nibs */
     [self.tableView registerNib:[UINib nibWithNibName:@"DealCell" bundle:nil] forCellReuseIdentifier:@"DealCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"DistanceCell" bundle:nil] forCellReuseIdentifier:@"DistanceCell"];
@@ -105,11 +107,21 @@
     return nil;
 }
 
+
+
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if(section == 1) {
+        if(self.listView){
+            return self.distanceOptions.count;
+        } else {
+            return 1;
+        }
+    }
     if(section == 3){
         return self.categories.count;
     }
@@ -126,8 +138,36 @@
 
     } else if(indexPath.section == 1){
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"DistanceCell"];
+        
+        if(self.listView){
+            if(indexPath.row == 0){
+                cell.textLabel.text = self.distanceOptions[indexPath.row];
+            } else if(indexPath.row == 2){
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ mile", self.distanceOptions[indexPath.row]];
+            } else {
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ miles", self.distanceOptions[indexPath.row]];
+            }
+
+            if(indexPath.row == self.selectedIndex){
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+        } else {
+            if(self.selectedIndex == 0){
+                cell.textLabel.text = self.distanceOptions[self.selectedIndex];
+            } else if(self.selectedIndex == 2){
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ mile", self.distanceOptions[self.selectedIndex]];
+            } else {
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ miles", self.distanceOptions[self.selectedIndex]];
+            }
+
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+
     } else if(indexPath.section == 2){
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"SortCell"];
+
     } else {
         CategoryCell *cCell = [self.tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
         cCell.categoryLabel.text = [self.categories[indexPath.row] objectForKey:@"name"];
@@ -159,6 +199,15 @@
         [self.categoryFilters addObject:self.categories[indexPath.row]];
     } else {
         [self.categoryFilters removeObject:self.categories[indexPath.row]];
+    }
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section == 1){
+        NSLog(@"Distance cell clicked");
+        self.listView = !self.listView;
+        self.selectedIndex = indexPath.row;
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
