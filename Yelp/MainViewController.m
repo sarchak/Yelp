@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "BusinessViewCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "FiltersViewController.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -32,7 +33,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         
-        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+        [self.client searchWithTerm:@"Restaurants" params:nil success:^(AFHTTPRequestOperation *operation, id response) {
             NSLog(@"response: %@", response);
             NSDictionary *data = response;
             self.businesses = data[@"businesses"];
@@ -55,6 +56,16 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
     [self.tableView registerNib:[UINib  nibWithNibName:@"BusinessViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 85;
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter)];
+
+}
+
+-(void) onFilter {
+    FiltersViewController *fvc = [[FiltersViewController alloc] init];
+    fvc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    [self presentViewController:nvc animated:true completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,5 +92,17 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distance];
     cell.address.text = location[@"display_address"][0];
     return cell;
+}
+
+-(void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
+    NSLog(@"Filters Changed : %@", filters);
+    [self.client searchWithTerm:@"Restaurants" params:filters success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        NSDictionary *data = response;
+        self.businesses = data[@"businesses"];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
 }
 @end
