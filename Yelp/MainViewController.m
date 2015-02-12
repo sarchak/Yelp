@@ -33,17 +33,20 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        
-        [self.client searchWithTerm:@"Restaurants" params:nil success:^(AFHTTPRequestOperation *operation, id response) {
-            NSLog(@"response: %@", response);
-            NSDictionary *data = response;
-            self.businesses = data[@"businesses"];
-            [self.tableView reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error: %@", [error description]);
-        }];
+        [self fetchBusinesses:@"Restaurants" params:nil];
     }
     return self;
+}
+
+-(void) fetchBusinesses: (NSString*) query params: (NSDictionary*) params {
+    [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        NSDictionary *data = response;
+        self.businesses = data[@"businesses"];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
 }
 
 - (void)viewDidLoad
@@ -119,13 +122,34 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 -(void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
     NSLog(@"Filters Changed : %@", filters);
-    [self.client searchWithTerm:@"Restaurants" params:filters success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"response: %@", response);
-        NSDictionary *data = response;
-        self.businesses = data[@"businesses"];
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];
+    [self fetchBusinesses:@"Restaurants" params:filters];
+}
+
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    
+}
+-(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    self.active = YES;
+//    if([searchText isEqual:@""]){
+//        self.active = NO;
+//        [self.tableView reloadData];
+//    }
+//    [self searchFunc:searchText];
+    NSLog(@"searching");
+}
+//
+//
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+
+    self.customSearchBar.text = nil;
+    self.customSearchBar.placeholder = @"Search";
+    [self.customSearchBar resignFirstResponder];
+}
+
+-(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"Text search endded");
+    [self fetchBusinesses:searchBar.text params:nil];
+    [self.customSearchBar resignFirstResponder];
 }
 @end
