@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableSet* categoryFilters;
 @property (nonatomic, strong) NSUserDefaults* userDefaults;
 @property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, assign) NSInteger radius;
 -(UITableViewCell*) getTableViewCell:(NSIndexPath*) indexPath;
 
 
@@ -53,7 +54,8 @@
     
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     self.dealsOn = [self.userDefaults boolForKey:@"deals_filter"];
-    
+    self.selectedIndex = [self.userDefaults integerForKey:@"selected"];
+    self.radius = [self.userDefaults integerForKey:@"radius"];
     [self.categoryFilters addObjectsFromArray:[self.userDefaults arrayForKey:@"categories_filter"]];
 
 }
@@ -72,6 +74,10 @@
     if(self.dealsOn) {
         [filters setValue:[NSNumber numberWithBool:self.dealsOn] forKey:@"deals_filter"];
     }
+    if(self.radius > 0){
+        [filters setValue:[NSNumber numberWithInteger:self.radius] forKey:@"radius_filter"];
+    }
+    
     return filters;
 }
 
@@ -204,7 +210,16 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == 1){
-        NSLog(@"Distance cell clicked");
+        if (indexPath.row == 0){
+            self.radius = 0;
+            NSLog(@"Radius Filter set : %ld", self.radius);
+        } else {
+            self.radius = [self.distanceOptions[indexPath.row] doubleValue] * 1600;
+            NSLog(@"Radius Filter set : %ld", self.radius);
+        }
+        [self.userDefaults setInteger:self.radius forKey:@"radius"];
+        [self.userDefaults setInteger:indexPath.row forKey:@"selected"];
+        [self.userDefaults synchronize];
         self.listView = !self.listView;
         self.selectedIndex = indexPath.row;
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];

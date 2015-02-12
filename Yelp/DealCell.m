@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.toggleSwitch setOnTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
