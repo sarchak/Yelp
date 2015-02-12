@@ -22,6 +22,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) YelpClient *client;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *businesses;
+@property (strong, nonatomic) UISearchBar *customSearchBar;
 @end
 
 @implementation MainViewController
@@ -58,7 +59,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 85;
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter)];
-
+    self.customSearchBar = [[UISearchBar alloc] init];
+    self.customSearchBar.showsCancelButton = YES;
+    self.customSearchBar.placeholder = @"Search";
+    self.customSearchBar.delegate = self;
+//    self.customSearchBar.tintColor = [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1];
+    self.navigationItem.titleView = self.customSearchBar;
 }
 
 -(void) onFilter {
