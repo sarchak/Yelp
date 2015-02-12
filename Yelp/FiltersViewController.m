@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSUserDefaults* userDefaults;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) NSInteger radius;
+@property (nonatomic, assign) NSInteger sortIndex;
 -(UITableViewCell*) getTableViewCell:(NSIndexPath*) indexPath;
 
 
@@ -56,6 +57,7 @@
     self.dealsOn = [self.userDefaults boolForKey:@"deals_filter"];
     self.selectedIndex = [self.userDefaults integerForKey:@"selected"];
     self.radius = [self.userDefaults integerForKey:@"radius"];
+    self.sortIndex = [self.userDefaults integerForKey:@"sort"];
     [self.categoryFilters addObjectsFromArray:[self.userDefaults arrayForKey:@"categories_filter"]];
 
 }
@@ -76,6 +78,10 @@
     }
     if(self.radius > 0){
         [filters setValue:[NSNumber numberWithInteger:self.radius] forKey:@"radius_filter"];
+    }
+    
+    if(self.sortIndex > 0){
+        [filters setValue:[NSNumber numberWithInteger:self.sortIndex] forKey:@"sort"];
     }
     
     return filters;
@@ -172,8 +178,10 @@
         }
 
     } else if(indexPath.section == 2){
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"SortCell"];
-
+        SortCell *scell = [self.tableView dequeueReusableCellWithIdentifier:@"SortCell"];
+        scell.selectedIndex = self.sortIndex;
+        scell.delegate = self;
+        cell = scell;
     } else {
         CategoryCell *cCell = [self.tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
         cCell.categoryLabel.text = [self.categories[indexPath.row] objectForKey:@"name"];
@@ -206,6 +214,11 @@
     } else {
         [self.categoryFilters removeObject:self.categories[indexPath.row]];
     }
+}
+
+-(void) sortCell:(SortCell *)sortCell didChangeValue:(NSInteger)value{
+    [self.userDefaults setInteger:value forKey:@"sort"];
+    self.sortIndex = value;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

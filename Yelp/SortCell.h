@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SortCell : UITableViewCell
+@class SortCell;
 
+@protocol SortCellDelegate <NSObject>
+
+-(void) sortCell: (SortCell*)sortCell didChangeValue:(NSInteger) value;
+
+@end
+
+@interface SortCell : UITableViewCell
+@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic,weak) id<SortCellDelegate> delegate;
+-(void) setSelectedIndex:(NSInteger)selectedIndex;
 @end

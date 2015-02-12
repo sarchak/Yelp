@@ -17,6 +17,9 @@
 - (void)awakeFromNib {
     // Initialization code
     [self.toggleSwitch setOnTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
+//    [self.toggleSwitch setOnImage:[UIImage imageNamed:@"yelp"]];
+//    [self.toggleSwitch setThumbTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"yelp"]]];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DealCell.h"
 #import "CategoryCell.h"
+#import "SortCell.h"
 
 @class FiltersViewController;
 
@@ -17,6 +18,6 @@
 -(void) filtersViewController: (FiltersViewController*) filtersViewController didChangeFilters: (NSDictionary*) filters;
 
 @end
-@interface FiltersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DealCellDelegate, CategoryCellDelegate>
+@interface FiltersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DealCellDelegate, CategoryCellDelegate, SortCellDelegate>
 @property (weak,nonatomic) id<FiltersViewControllerDelegate> delegate;
 @end

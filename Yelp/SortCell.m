@@ -8,6 +8,10 @@
 
 #import "SortCell.h"
 
+@interface SortCell()
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
+@end
 @implementation SortCell
 
 - (void)awakeFromNib {
@@ -20,4 +24,13 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)valueChanged:(id)sender {
+    NSLog(@"Value changed to : %ld", self.segmentedControl.selectedSegmentIndex);
+    [self.delegate sortCell:self didChangeValue:self.segmentedControl.selectedSegmentIndex];
+}
+
+-(void) setSelectedIndex:(NSInteger)selectedIndex {
+    _selectedIndex = selectedIndex;
+    self.segmentedControl.selectedSegmentIndex = selectedIndex;
+}
 @end
