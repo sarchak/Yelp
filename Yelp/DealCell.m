@@ -8,6 +8,10 @@
 
 #import "DealCell.h"
 
+@interface DealCell()
+@property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
+@end
+
 @implementation DealCell
 
 - (void)awakeFromNib {
@@ -23,5 +27,14 @@
 - (IBAction)switchValueChanged:(id)sender {
     [self.delegate dealCell:self didChangeValue:self.toggleSwitch.on];
 }
+
+-(void) setOn:(BOOL)on {
+    [self setOn:on animated:NO];
+    self.toggleSwitch.on = on;
+}
+-(void) setOn:(BOOL)on animated:(BOOL)animated {
+    [self.toggleSwitch setOn:on animated:animated];
+}
+
 
 @end

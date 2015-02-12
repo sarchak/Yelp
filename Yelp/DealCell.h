@@ -16,8 +16,11 @@
 
 
 @interface DealCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
+
 @property (nonatomic, assign) BOOL on;
+
+-(void) setOn:(BOOL)on animated:(BOOL) animated;
+
 @property (nonatomic, weak) id<DealCellDelegate> delegate;
 @end
 

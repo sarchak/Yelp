@@ -81,7 +81,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BusinessViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"] ;
     NSDictionary *data = self.businesses[indexPath.row];
-    cell.name.text = data[@"name"];
+    cell.name.text = [NSString stringWithFormat:@"%ld. %@", indexPath.row + 1, data[@"name"]];
     
     [cell.posterImageView setImageWithURL:[NSURL URLWithString:data[@"image_url"]]];
     [cell.ratingsImageView setImageWithURL:[NSURL URLWithString:data[@"rating_img_url"]]];
@@ -90,7 +90,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSString *distanceString = data[@"distance"];
     double distance = 0.000621371192 * distanceString.doubleValue;
     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distance];
-    cell.address.text = location[@"display_address"][0];
+    
+//    NSMutableString *tmp = location[@"display_address"][0];
+//    if(location[@"neighborhoods"]){
+//        [tmp appendString:location[@"neighborhoods"][0]];
+//    }
+    if(location[@"neighborhoods"][0]) {
+        cell.address.text = [NSString stringWithFormat:@"%@, %@", location[@"display_address"][0],location[@"neighborhoods"][0]];
+    } else {
+        cell.address.text = [NSString stringWithFormat:@"%@", location[@"display_address"][0]];
+    }
+
+    
     
     NSMutableArray *categories = [NSMutableArray array];
     for(NSArray *category in data[@"categories"]){

@@ -18,9 +18,9 @@
 
 @interface CategoryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (nonatomic, assign) BOOL on;
 @property (weak, nonatomic) id<CategoryCellDelegate> delegate;
 
+@property (nonatomic, assign) BOOL on;
 
 -(void) setOn:(BOOL)on animated:(BOOL) animated;
 @end

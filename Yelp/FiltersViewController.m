@@ -20,7 +20,7 @@
 @property (strong, readonly) NSDictionary* filters;
 @property (nonatomic, assign) BOOL dealsOn;
 @property (nonatomic, strong) NSMutableSet* categoryFilters;
-
+@property (nonatomic, strong) NSUserDefaults* userDefaults;
 -(UITableViewCell*) getTableViewCell:(NSIndexPath*) indexPath;
 
 
@@ -48,6 +48,12 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"CategoryCell" bundle:nil] forCellReuseIdentifier:@"CategoryCell"];
     
     self.categoryFilters = [NSMutableSet set];
+    
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
+    self.dealsOn = [self.userDefaults boolForKey:@"deals_filter"];
+    
+    [self.categoryFilters addObjectsFromArray:[self.userDefaults arrayForKey:@"categories_filter"]];
+
 }
 
 
@@ -69,6 +75,10 @@
 
 -(void) search {
     NSLog(@"Search clicked");
+
+    [self.userDefaults setBool:self.dealsOn forKey:@"deals_filter"];
+    [self.userDefaults setObject: [self.categoryFilters allObjects] forKey:@"categories_filter"];
+    [self.userDefaults synchronize];
     [self.delegate filtersViewController:self didChangeFilters:self.filters];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -110,6 +120,7 @@
     UITableViewCell *cell = nil;
     if(indexPath.section == 0) {
         DealCell *dcell = [self.tableView dequeueReusableCellWithIdentifier:@"DealCell"];
+        dcell.on = self.dealsOn;
         dcell.delegate = self;
         cell = dcell;
 
