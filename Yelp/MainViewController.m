@@ -91,6 +91,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     double distance = 0.000621371192 * distanceString.doubleValue;
     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distance];
     cell.address.text = location[@"display_address"][0];
+    
+    NSMutableArray *categories = [NSMutableArray array];
+    for(NSArray *category in data[@"categories"]){
+        [categories addObject:category[0]];
+    }
+    cell.categories.text = [categories componentsJoinedByString:@","];
     return cell;
 }
 
