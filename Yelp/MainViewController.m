@@ -11,7 +11,7 @@
 #import "BusinessViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "FiltersViewController.h"
-
+#import "SVProgressHUD.h"
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
@@ -33,19 +33,22 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self fetchBusinesses:@"Restaurants" params:nil];
+        
     }
     return self;
 }
 
 -(void) fetchBusinesses: (NSString*) query params: (NSDictionary*) params {
+    [SVProgressHUD show];
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSDictionary *data = response;
         self.businesses = data[@"businesses"];
         [self.tableView reloadData];
+        [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -68,6 +71,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.customSearchBar.delegate = self;
 //    self.customSearchBar.tintColor = [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1];
     self.navigationItem.titleView = self.customSearchBar;
+
+    [SVProgressHUD setForegroundColor: [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
+
+    [self fetchBusinesses:@"Restaurants" params:nil];
 }
 
 -(void) onFilter {
