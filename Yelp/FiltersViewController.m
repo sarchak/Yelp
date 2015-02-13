@@ -247,8 +247,8 @@
                             @{@"name" : @"Bars", @"code": @"bars" , @"image":@"bars"},
                             @{@"name" : @"NightLife", @"code": @"nightlife" , @"image":@"bars"},
                             @{@"name" : @"Coffee & Tea", @"code": @"coffee" , @"image":@"coffee"},
-                            @{@"name" : @"Gas & Service Station", @"code": @"servicesstations" , @"image": @"gas"},
-                            @{@"name" : @"Drugstore", @"code": @"drugstore" , @"image":@"drugstore"},
+                            @{@"name" : @"Gas & Service Station", @"code": @"servicestations" , @"image": @"gas"},
+                            @{@"name" : @"Drugstore", @"code": @"drugstores" , @"image":@"drugstore"},
                             @{@"name" : @"Shopping", @"code": @"shopping", @"image":@"shopping" }
                            ];
     return categories;
