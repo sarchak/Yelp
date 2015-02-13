@@ -22,6 +22,11 @@
 		42FD6C6618DC286B000BF2B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42FD6C4E18DC286B000BF2B9 /* UIKit.framework */; };
 		42FD6C6E18DC286B000BF2B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42FD6C6C18DC286B000BF2B9 /* InfoPlist.strings */; };
 		42FD6C7018DC286B000BF2B9 /* YelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FD6C6F18DC286B000BF2B9 /* YelpTests.m */; };
+		560BF5121A8DBD12009BCB2B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 560BF5101A8DBD12009BCB2B /* DetailViewController.m */; };
+		560BF5131A8DBD12009BCB2B /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 560BF5111A8DBD12009BCB2B /* DetailViewController.xib */; };
+		560BF5171A8DBE06009BCB2B /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 560BF5151A8DBE06009BCB2B /* DetailCell.m */; };
+		560BF5181A8DBE06009BCB2B /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 560BF5161A8DBE06009BCB2B /* DetailCell.xib */; };
+		560BF51A1A8DC68B009BCB2B /* Food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 560BF5191A8DC68B009BCB2B /* Food.jpg */; };
 		56E023521A8B08290026573D /* BusinessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E023501A8B08290026573D /* BusinessViewCell.m */; };
 		56E023531A8B08290026573D /* BusinessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56E023511A8B08290026573D /* BusinessViewCell.xib */; };
 		56E023571A8B344E0026573D /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E023551A8B344E0026573D /* FiltersViewController.m */; };
@@ -75,6 +80,13 @@
 		42FD6C6B18DC286B000BF2B9 /* YelpTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YelpTests-Info.plist"; sourceTree = "<group>"; };
 		42FD6C6D18DC286B000BF2B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		42FD6C6F18DC286B000BF2B9 /* YelpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpTests.m; sourceTree = "<group>"; };
+		560BF50F1A8DBD12009BCB2B /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		560BF5101A8DBD12009BCB2B /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		560BF5111A8DBD12009BCB2B /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		560BF5141A8DBE06009BCB2B /* DetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
+		560BF5151A8DBE06009BCB2B /* DetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
+		560BF5161A8DBE06009BCB2B /* DetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCell.xib; sourceTree = "<group>"; };
+		560BF5191A8DC68B009BCB2B /* Food.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Food.jpg; sourceTree = "<group>"; };
 		56E0234F1A8B08290026573D /* BusinessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessViewCell.h; sourceTree = "<group>"; };
 		56E023501A8B08290026573D /* BusinessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessViewCell.m; sourceTree = "<group>"; };
 		56E023511A8B08290026573D /* BusinessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessViewCell.xib; sourceTree = "<group>"; };
@@ -164,6 +176,12 @@
 				56E023B31A8D91E60026573D /* MapViewController.h */,
 				56E023B41A8D91E60026573D /* MapViewController.m */,
 				56E023B51A8D91E60026573D /* MapViewController.xib */,
+				560BF50F1A8DBD12009BCB2B /* DetailViewController.h */,
+				560BF5101A8DBD12009BCB2B /* DetailViewController.m */,
+				560BF5111A8DBD12009BCB2B /* DetailViewController.xib */,
+				560BF5141A8DBE06009BCB2B /* DetailCell.h */,
+				560BF5151A8DBE06009BCB2B /* DetailCell.m */,
+				560BF5161A8DBE06009BCB2B /* DetailCell.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -210,6 +228,7 @@
 				42FD6C5918DC286B000BF2B9 /* AppDelegate.h */,
 				42FD6C5A18DC286B000BF2B9 /* AppDelegate.m */,
 				42FD6C5C18DC286B000BF2B9 /* Images.xcassets */,
+				560BF5191A8DC68B009BCB2B /* Food.jpg */,
 				42FD6C5118DC286B000BF2B9 /* Supporting Files */,
 			);
 			path = Yelp;
@@ -341,8 +360,11 @@
 			files = (
 				56E023531A8B08290026573D /* BusinessViewCell.xib in Resources */,
 				56E023621A8BC3890026573D /* DistanceCell.xib in Resources */,
+				560BF5181A8DBE06009BCB2B /* DetailCell.xib in Resources */,
+				560BF51A1A8DC68B009BCB2B /* Food.jpg in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				56E023B71A8D91E60026573D /* MapViewController.xib in Resources */,
+				560BF5131A8DBD12009BCB2B /* DetailViewController.xib in Resources */,
 				56E023581A8B344E0026573D /* FiltersViewController.xib in Resources */,
 				56E0235D1A8BC26B0026573D /* DealCell.xib in Resources */,
 				56E023671A8BC4440026573D /* SortCell.xib in Resources */,
@@ -409,8 +431,10 @@
 				56E023521A8B08290026573D /* BusinessViewCell.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				56E023611A8BC3890026573D /* DistanceCell.m in Sources */,
+				560BF5121A8DBD12009BCB2B /* DetailViewController.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				56E0235C1A8BC26B0026573D /* DealCell.m in Sources */,
+				560BF5171A8DBE06009BCB2B /* DetailCell.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +556,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Yelp/Yelp-Prefix.pch";
 				INFOPLIST_FILE = "Yelp/Yelp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -546,6 +571,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Yelp/Yelp-Prefix.pch";
 				INFOPLIST_FILE = "Yelp/Yelp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

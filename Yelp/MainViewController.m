@@ -15,6 +15,7 @@
 #import "UIScrollView+SVPullToRefresh.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "MapViewController.h"
+#import "DetailViewController.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -49,7 +50,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 -(void) fetchBusinesses: (NSString*) query params: (NSDictionary*) params {
     [SVProgressHUD show];
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"response: %@", response);
+//        NSLog(@"response: %@", response);
         NSDictionary *data = response;
         if(self.businesses.count == 0 || self.filterReset){
           self.businesses = data[@"businesses"];
@@ -90,7 +91,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter)];
     self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(mapViewClicked)];
     self.customSearchBar = [[UISearchBar alloc] init];
-    self.customSearchBar.showsCancelButton = YES;
+//    self.customSearchBar.showsCancelButton = YES;
     self.customSearchBar.placeholder = @"Search";
     self.customSearchBar.delegate = self;
 //    self.customSearchBar.tintColor = [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1];
@@ -152,6 +153,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if(data[@"deals"] != nil){
         cell.dealImage.hidden= NO;
     }
+    
     if(location[@"neighborhoods"][0]) {
         cell.address.text = [NSString stringWithFormat:@"%@, %@", location[@"display_address"][0],location[@"neighborhoods"][0]];
     } else {
@@ -165,6 +167,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         [categories addObject:category[0]];
     }
     cell.categories.text = [categories componentsJoinedByString:@","];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -178,24 +181,28 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    
+        NSLog(@"Begin editing");
 }
 -(void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-//    self.active = YES;
-//    if([searchText isEqual:@""]){
-//        self.active = NO;
-//        [self.tableView reloadData];
+//    if([self.searchText  isEqual: @""] || self.searchText == nil) {
+//        NSLog(@"Coming in the toggle");
+//        self.customSearchBar.text = nil;
+//        self.customSearchBar.placeholder = @"Search";
+//        [self.customSearchBar resignFirstResponder];
 //    }
-//    [self searchFunc:searchText];
-    NSLog(@"searching");
+
 }
-//
-//
+
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchText = nil;
     self.customSearchBar.text = nil;
     self.customSearchBar.placeholder = @"Search";
     [self.customSearchBar resignFirstResponder];
+    NSLog(@"Text search cancel clicked endded");
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    NSLog(@"Text did end endded");
 }
 
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -205,5 +212,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.searchText = searchBar.text;
     [self fetchBusinesses:searchBar.text params:nil];
     [self.customSearchBar resignFirstResponder];
+    self.customSearchBar.text = nil;
+}
+
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DetailViewController *dvc = [[DetailViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:dvc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 @end
