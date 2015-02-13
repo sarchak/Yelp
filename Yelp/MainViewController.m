@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+SVPullToRefresh.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "MapViewController.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -48,7 +49,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 -(void) fetchBusinesses: (NSString*) query params: (NSDictionary*) params {
     [SVProgressHUD show];
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
-//        NSLog(@"response: %@", response);
+        NSLog(@"response: %@", response);
         NSDictionary *data = response;
         if(self.businesses.count == 0 || self.filterReset){
           self.businesses = data[@"businesses"];
@@ -87,6 +88,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 85;
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter)];
+    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(mapViewClicked)];
     self.customSearchBar = [[UISearchBar alloc] init];
     self.customSearchBar.showsCancelButton = YES;
     self.customSearchBar.placeholder = @"Search";
@@ -113,6 +115,15 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
     [self presentViewController:nvc animated:true completion:nil];
 }
+
+-(void) mapViewClicked {
+    MapViewController *mvc = [[MapViewController alloc] init];
+    mvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    mvc.businesses = self.businesses;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
+    [self presentViewController:nvc animated:true completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
