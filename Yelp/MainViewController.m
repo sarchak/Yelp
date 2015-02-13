@@ -12,6 +12,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "FiltersViewController.h"
 #import "SVProgressHUD.h"
+#import "UIScrollView+SVPullToRefresh.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
@@ -43,7 +46,16 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSDictionary *data = response;
-        self.businesses = data[@"businesses"];
+        if(self.businesses.count == 0){
+          self.businesses = data[@"businesses"];
+        } else {
+            NSArray* recent= data[@"businesses"];
+            NSMutableArray *tmpArray = [self.businesses mutableCopy];
+            [tmpArray addObjectsFromArray:recent];
+            self.businesses = tmpArray;
+        }
+
+//
         [self.tableView reloadData];
         [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -75,6 +87,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [SVProgressHUD setForegroundColor: [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
 
     [self fetchBusinesses:@"Restaurants" params:nil];
+    
+    /* Infinite scrolling */
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+       
+        [self fetchBusinesses:@"Restaurants" params:nil];
+        [self.tableView.infiniteScrollingView stopAnimating];
+    }];
 }
 
 -(void) onFilter {
