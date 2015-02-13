@@ -9,14 +9,15 @@
 #import "CategoryCell.h"
 
 @interface CategoryCell()
-    @property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
 @end
 
 @implementation CategoryCell
 
 - (void)awakeFromNib {
     // Initialization code
-    [self.toggleSwitch setOnTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];    
+    [self.toggleSwitch setOnTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

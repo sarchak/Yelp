@@ -17,6 +17,7 @@
 @end
 
 @interface CategoryCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *posterView;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) id<CategoryCellDelegate> delegate;
 

@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="American" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sa-Qp-edt">
-                        <rect key="frame" x="20" y="14" width="73" height="21"/>
+                        <rect key="frame" x="55" y="14" width="73" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -26,9 +26,18 @@
                             <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="onk-R0-VwO"/>
                         </connections>
                     </switch>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurants" translatesAutoresizingMaskIntoConstraints="NO" id="iXv-sX-V4K">
+                        <rect key="frame" x="20" y="12" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="1sD-78-xNh"/>
+                            <constraint firstAttribute="width" constant="25" id="Xfd-L2-PPK"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8sa-Qp-edt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="OvB-fG-PmP"/>
+                    <constraint firstItem="8sa-Qp-edt" firstAttribute="centerY" secondItem="iXv-sX-V4K" secondAttribute="centerY" id="CWY-nD-T69"/>
+                    <constraint firstItem="iXv-sX-V4K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="IpF-Nf-h7H"/>
+                    <constraint firstItem="8sa-Qp-edt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="55" id="OvB-fG-PmP"/>
                     <constraint firstAttribute="trailing" secondItem="QhF-ho-72y" secondAttribute="trailing" constant="8" id="YfK-Yg-Eaj"/>
                     <constraint firstItem="8sa-Qp-edt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="jXP-CO-2yn"/>
                     <constraint firstItem="QhF-ho-72y" firstAttribute="centerY" secondItem="8sa-Qp-edt" secondAttribute="centerY" id="xZs-bk-yn8"/>
@@ -36,8 +45,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="categoryLabel" destination="8sa-Qp-edt" id="sE1-qm-B5l"/>
+                <outlet property="posterView" destination="iXv-sX-V4K" id="kLq-wX-AOA"/>
                 <outlet property="toggleSwitch" destination="QhF-ho-72y" id="faT-Yu-Zni"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="restaurants" width="50" height="50"/>
+    </resources>
 </document>

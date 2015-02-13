@@ -26,6 +26,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *businesses;
 @property (strong, nonatomic) UISearchBar *customSearchBar;
+@property (assign, nonatomic) BOOL filterReset;
+@property (strong, nonatomic) NSDictionary *filters;
+@property (assign, nonatomic) NSInteger offset;
 @end
 
 @implementation MainViewController
@@ -46,16 +49,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSDictionary *data = response;
-        if(self.businesses.count == 0){
+        if(self.businesses.count == 0 || self.filterReset){
           self.businesses = data[@"businesses"];
+            self.filterReset = NO;
+            self.offset = self.offset + self.businesses.count;
         } else {
             NSArray* recent= data[@"businesses"];
             NSMutableArray *tmpArray = [self.businesses mutableCopy];
             [tmpArray addObjectsFromArray:recent];
             self.businesses = tmpArray;
+            self.offset = self.offset + recent.count;
         }
-
-//
+        [self.filters setValue: [NSNumber numberWithInteger:self.offset] forKey:@"offset"];
         [self.tableView reloadData];
         [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -68,6 +73,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 {
     [super viewDidLoad];
     
+    self.offset = 0;
     self.title = @"Yelp";
     /* Setup datasource and delegate */
     self.tableView.dataSource = self;
@@ -86,12 +92,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
     [SVProgressHUD setForegroundColor: [UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
 
-    [self fetchBusinesses:@"Restaurants" params:nil];
+    [self fetchBusinesses:@"Restaurants" params:self.filters];
     
     /* Infinite scrolling */
     [self.tableView addInfiniteScrollingWithActionHandler:^{
        
-        [self fetchBusinesses:@"Restaurants" params:nil];
+        [self fetchBusinesses:nil params:self.filters];
         [self.tableView.infiniteScrollingView stopAnimating];
     }];
 }
@@ -148,7 +154,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 -(void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
     NSLog(@"Filters Changed : %@", filters);
-    [self fetchBusinesses:@"Restaurants" params:filters];
+    self.filterReset = YES;
+    self.offset = 0;
+    self.filters = filters;
+    [self fetchBusinesses:nil params:filters];
 }
 
 

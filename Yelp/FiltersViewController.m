@@ -41,7 +41,7 @@
     self.tableView.delegate = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
-    self.categories = [self getCategories];
+    self.categories = [self getPopularCategories];
     self.simpleCategories = @[@"American",@"Thai",@"Chinese",@"Indian", @"Show All"];
     self.distanceOptions = @[@"Best Match", @"0.3",@"1", @"5", @"20"];
     self.sortOptions = @[@"Best Match",@"Distance", @"Rating"];
@@ -187,6 +187,7 @@
         cCell.categoryLabel.text = [self.categories[indexPath.row] objectForKey:@"name"];
         cCell.on = [self.categoryFilters containsObject:self.categories[indexPath.row]];
         cCell.delegate = self;
+        cCell.posterView.image = [UIImage imageNamed:[self.categories[indexPath.row] objectForKey:@"image"]];
         cell = cCell;
     }
 
@@ -239,6 +240,19 @@
     }
 }
 
+-(NSArray*) getPopularCategories {
+    NSArray *categories = @[
+                            @{@"name" : @"Restaurants", @"code": @"restaurants", @"image": @"restaurants" },
+                            @{@"name" : @"Delivery", @"code": @"fooddeliveryservices" , @"image": @"delivery"},
+                            @{@"name" : @"Bars", @"code": @"bars" , @"image":@"bars"},
+                            @{@"name" : @"NightLife", @"code": @"nightlife" , @"image":@"bars"},
+                            @{@"name" : @"Coffee & Tea", @"code": @"coffee" , @"image":@"coffee"},
+                            @{@"name" : @"Gas & Service Station", @"code": @"servicesstations" , @"image": @"gas"},
+                            @{@"name" : @"Drugstore", @"code": @"drugstore" , @"image":@"drugstore"},
+                            @{@"name" : @"Shopping", @"code": @"shopping", @"image":@"shopping" }
+                           ];
+    return categories;
+}
 -(NSArray*) getCategories {
     
     NSArray *categories = @[@{@"name" : @"Afghan", @"code": @"afghani" },
