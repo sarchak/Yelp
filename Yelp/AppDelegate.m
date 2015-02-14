@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "MapViewController.h"
 
 @implementation AppDelegate
 
@@ -17,7 +18,26 @@
     
     MainViewController *mvc = [[MainViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:mvc];
-    self.window.rootViewController = nvc;
+
+    MapViewController *mapvc = [[MapViewController alloc] init];
+    UINavigationController *mapnvc = [[UINavigationController alloc] initWithRootViewController:mapvc];
+
+    UITabBarController *tbc = [[UITabBarController alloc] init];
+    [tbc setViewControllers:@[nvc,mapnvc]];
+    //    [tbc setViewControllers:@[nvc,npvc]];
+    
+    NSArray *items = tbc.tabBar.items;
+    
+    UITabBarItem *yelp = [items objectAtIndex:0];
+    UITabBarItem *map = [items objectAtIndex:1];
+    [yelp initWithTitle:@"Yelp" image:[UIImage imageNamed:@"search"] selectedImage: [UIImage imageNamed:@"search"]];
+    
+    [map initWithTitle:@"Map" image:[UIImage imageNamed:@"near"] selectedImage: [UIImage imageNamed:@"near"]];
+    
+    self.window.rootViewController= tbc;
+
+    
+//    self.window.rootViewController = nvc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -26,7 +46,12 @@
     [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [navBar setTintColor:[UIColor whiteColor]];
+
+    UITabBar *tabBar = [UITabBar appearance];
+    [tabBar setBarTintColor:[UIColor colorWithRed:181.0/255 green:10.0/255 blue:4.0/255 alpha:1]];
     
+    [tabBar setTintColor:[UIColor whiteColor]];
+
 
     return YES;
 }

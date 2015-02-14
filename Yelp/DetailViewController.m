@@ -28,7 +28,7 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 220;
-    NSLog(@"%@", self.business);
+
     self.title = self.business.name;
 }
 
