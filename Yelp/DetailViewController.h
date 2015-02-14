@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Business.h"
 @interface DetailViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
-
+@property (nonatomic,weak) Business* business;
 @end

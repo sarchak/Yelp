@@ -16,6 +16,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "MapViewController.h"
 #import "DetailViewController.h"
+#import "Business.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -50,7 +51,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 -(void) fetchBusinesses: (NSString*) query params: (NSDictionary*) params {
     [SVProgressHUD show];
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
-//        NSLog(@"response: %@", response);
+        NSLog(@"response: %@", response);
         NSDictionary *data = response;
         if(self.businesses.count == 0 || self.filterReset){
           self.businesses = data[@"businesses"];
@@ -218,7 +219,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailViewController *dvc = [[DetailViewController alloc] init];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:dvc];
-    [self presentViewController:nvc animated:YES completion:nil];
+    NSDictionary *data = self.businesses[indexPath.row];
+    dvc.business = [Business getBusiness:data];
+
+    [self.navigationController pushViewController:dvc animated:YES];
 }
 @end

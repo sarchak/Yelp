@@ -35,6 +35,10 @@
                     <constraint firstItem="aae-cE-g5Z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wiG-bP-qef"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="secondaryLabel" destination="E2t-Jv-rgJ" id="b4Z-DE-EaI"/>
+                <outlet property="titleLabel" destination="aae-cE-g5Z" id="5Nm-op-KAI"/>
+            </connections>
             <point key="canvasLocation" x="325" y="286.5"/>
         </tableViewCell>
     </objects>
