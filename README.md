@@ -4,7 +4,12 @@ This is a headless example of how to implement an OAuth 1.0a Yelp API client. Th
 
 Hours Spent : 16hrs
 
+#### General Functionality
 ![Video Walkthrough](yelp_latest.gif)
+
+#### Filter Functionality
+![Video Walkthrough](yelp_filters.gif)
+
 ###Search results page
 
    * Table rows should be dynamic height according to the content height   - (**Completed**)
